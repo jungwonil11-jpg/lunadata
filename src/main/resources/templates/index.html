@@ -41,10 +41,16 @@
             <section class="section">
                 <h2 class="section-title">타로에게 물어보세요</h2>
                 <div class="question-wrap">
+                    <div class="spread-hint" id="spreadHint">
+                        <div class="hint-fixed" id="hintFixed"></div>
+                        <div class="hint-scroll-wrap">
+                            <div class="hint-scroll" id="hintScroll"></div>
+                        </div>
+                    </div>
                     <textarea name="question" class="question-input"
-                              placeholder="지금 가장 궁금한 것을 적어주세요&#10;예) 이 사람과의 관계는 어떻게 될까요?"
-                              minlength="10" maxlength="200" required
-                              oninvalid="this.setCustomValidity('정확한 해석을 위해 10자 이상 입력해주세요')"
+                              placeholder=""
+                              minlength="6" maxlength="200" required
+                              oninvalid="this.setCustomValidity('정확한 해석을 위해 6자 이상 입력해주세요')"
                               oninput="this.setCustomValidity('')"></textarea>
                     <div class="question-hint">질문이 구체적일수록 해석이 정확해집니다</div>
                 </div>
