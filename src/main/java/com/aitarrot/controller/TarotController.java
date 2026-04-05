@@ -34,6 +34,10 @@ public class TarotController {
     public String draw(@RequestParam String spread,
                        @RequestParam String question,
                        HttpSession session) {
+        if (isMeaninglessInput(question)) {
+            return "redirect:/?error=invalid";
+        }
+
         SpreadType spreadType = SpreadType.valueOf(spread);
         List<TarotCard> drawnCards = tarotService.drawCards(spreadType);
         String interpretation = claudeService.interpret(spreadType, question, drawnCards);
@@ -44,6 +48,28 @@ public class TarotController {
         session.setAttribute("interpretation", interpretation);
 
         return "redirect:/result";
+    }
+
+    private boolean isMeaninglessInput(String question) {
+        if (question == null || question.isBlank()) return true;
+
+        long syllables = 0;       // 완성된 한글 음절 (가-힣)
+        long consonantsVowels = 0; // 단독 자음/모음 (ㄱ-ㅎ, ㅏ-ㅣ)
+        long alphanumeric = 0;     // 영문자, 숫자
+
+        for (char c : question.toCharArray()) {
+            if (c >= '\uAC00' && c <= '\uD7A3') syllables++;
+            else if ((c >= '\u3131' && c <= '\u314E') || (c >= '\u314F' && c <= '\u3163')) consonantsVowels++;
+            else if (Character.isLetterOrDigit(c)) alphanumeric++;
+        }
+
+        long meaningfulChars = syllables + alphanumeric;
+
+        // 의미있는 문자가 거의 없거나, 자음/모음이 음절보다 많으면 무의미한 입력
+        if (meaningfulChars < 2) return true;
+        if (consonantsVowels > 0 && consonantsVowels >= syllables + alphanumeric) return true;
+
+        return false;
     }
 
     @GetMapping("/result")

@@ -19,6 +19,10 @@
     </header>
 
     <main>
+        <div th:if="${param.error}" class="error-banner">
+            ✦ 예를들어 자음이나 모음만으로는 해석할 수 없어요. 의미 있는 질문을 해석할게요
+        </div>
+
         <form action="/draw" method="post">
             <!-- 스프레드 선택 -->
             <section class="section">
@@ -52,7 +56,7 @@
                               minlength="6" maxlength="200" required
                               oninvalid="this.setCustomValidity('정확한 해석을 위해 6자 이상 입력해주세요')"
                               oninput="this.setCustomValidity('')"></textarea>
-                    <div class="question-hint">질문이 구체적일수록 해석이 정확해집니다</div>
+                    <div class="question-hint">질문이 구체적일수록 해석이 정확해져요</div>
                 </div>
             </section>
 
@@ -62,6 +66,7 @@
                     카드 뽑기
                     <span class="btn-icon">✦</span>
                 </button>
+                <p class="draw-hint">질문을 마음속에 집중하고 버튼을 눌러주세요</p>
             </div>
         </form>
     </main>
@@ -74,7 +79,7 @@
 <div class="loading-overlay" id="loadingOverlay">
     <div class="loading-box">
         <div class="loading-symbol">🔮</div>
-        <p class="loading-text">달빛이 카드를 해석하는 중이에요...</p>
+        <p class="loading-text">루나가 카드를 뽑는 중이에요...</p>
         <div class="loading-dots"><span></span><span></span><span></span></div>
     </div>
 </div>
