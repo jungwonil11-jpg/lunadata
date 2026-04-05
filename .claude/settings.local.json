@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cp \"RWS1909_-_00_Fool.jpeg\" \"C:/AiTarrot/src/main/resources/static/images/cards/major_00.jpg\")",
+      "Bash(cp \"RWS1909_-_01_Magician.jpeg\" \"C:/AiTarrot/src/main/resources/static/images/cards/major_01.jpg\")",
+      "Bash(cp \"RWS1909_-_02_High_Priestess.jpeg\" \"C:/AiTarrot/src/main/resources/static/images/cards/major_02.jpg\")",
+      "Bash(cp \"RWS1909_-_03_Empress.jpeg\" \"C:/AiTarrot/src/main/resources/static/images/cards/major_03.jpg\")",
+      "Bash(cp \"RWS1909_-_04_Emperor.jpeg\" \"C:/AiTarrot/src/main/resources/static/images/cards/major_04.jpg\")",
+      "Bash(mvn spring-boot:run)",
+      "Read(//c/Program Files/**)",
+      "Read(//c/Program Files/Apache/**)",
+      "Bash(find /c -name \"mvn\" -type f)",
+      "Bash(\"/c/Users/jungw/.m2/wrapper/dists/apache-maven-3.9.14-bin/1cb7fhup6b5n3bed6kckbrnspv/apache-maven-3.9.14/bin/mvn\" spring-boot:run)",
+      "Bash(echo \"PID: $!\")",
+      "Bash(curl:*)",
+      "Bash(pkill -f \"spring-boot:run\")",
+      "Bash(pkill -f \"AiTarrotApplication\")",
+      "Bash(netstat -ano)",
+      "Bash(taskkill //F //PID 20252)",
+      "Bash(xargs -I{} taskkill //F //PID {})",
+      "Bash(xargs -I{} taskkill //F //PID {} sleep 2 cd \"C:/AiTarrot\")",
+      "Skill(claude-api)",
+      "Bash(git init:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}

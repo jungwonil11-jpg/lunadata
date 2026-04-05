@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>루나 데이터 - AI타로 — 해석 결과</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="stars" id="stars"></div>
+
+<div class="page-wrapper">
+    <header class="result-header">
+        <a href="/" class="back-link">← 처음으로</a>
+        <div class="header-symbol">☾ 🌙 ☽</div>
+        <h1 class="site-title">루나 데이터</h1>
+        <p class="site-subtitle">AI 타로</p>
+        <div class="result-meta">
+            <span class="spread-badge" th:text="${spreadType.displayName}"></span>
+            <span class="question-badge" th:text="'&quot;' + ${question} + '&quot;'"></span>
+        </div>
+    </header>
+
+    <main>
+        <!-- 카드 배치 -->
+        <section class="section">
+            <h2 class="section-title">뽑힌 카드</h2>
+            <div class="cards-grid" th:classappend="'cards-' + ${drawnCards.size()}">
+                <div th:each="card, stat : ${drawnCards}"
+                     class="card-slot"
+                     th:attr="data-index=${stat.index}">
+                    <div class="position-label" th:text="${card.position}"></div>
+                    <div class="tarot-card" th:classappend="${card.reversed} ? ' reversed' : ''">
+                        <div class="card-inner">
+                            <div class="card-back">
+                                <img th:src="@{/images/cards/card_back.jpg}" alt="카드 뒷면">
+                            </div>
+                            <div class="card-front">
+                                <img th:src="@{${card.imagePath}}" th:alt="${card.nameKo}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-name" th:text="${card.nameKo}"></div>
+                        <div class="card-orientation"
+                             th:classappend="${card.reversed} ? ' reversed-badge' : ' upright-badge'"
+                             th:text="${card.orientationKo}"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI 해석 -->
+        <section class="section interpretation-section">
+            <h2 class="section-title">✦ AI 해석</h2>
+            <div class="interpretation-box">
+                <div class="interpretation-icon">🔮</div>
+                <p class="interpretation-text" th:utext="${interpretationHtml}"></p>
+            </div>
+        </section>
+
+        <div class="submit-wrap">
+            <a href="/" class="btn-draw">
+                <span class="btn-icon">✦</span>
+                다시 뽑기
+                <span class="btn-icon">✦</span>
+            </a>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <p>타로는 참고용이며, 최종 결정은 언제나 본인의 몫입니다</p>
+    </footer>
+</div>
+
+<script th:src="@{/js/tarot.js}"></script>
+<script>
+    // 카드 순차 공개 애니메이션
+    document.addEventListener('DOMContentLoaded', function () {
+        const cards = document.querySelectorAll('.tarot-card');
+        cards.forEach((card, i) => {
+            setTimeout(() => {
+                card.classList.add('flipped');
+            }, 400 + i * 300);
+        });
+    });
+</script>
+</body>
+</html>

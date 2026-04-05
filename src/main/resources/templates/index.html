@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>루나 데이터 - AI타로</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="stars" id="stars"></div>
+
+<div class="page-wrapper">
+    <header class="main-header">
+        <div class="header-symbol">☾ 🌙 ☽</div>
+        <h1 class="site-title">루나 데이터</h1>
+        <p class="site-subtitle">AI 타로</p>
+        <p class="site-tagline">달빛 아래, 당신의 운명을 읽다</p>
+    </header>
+
+    <main>
+        <form action="/draw" method="post">
+            <!-- 스프레드 선택 -->
+            <section class="section">
+                <h2 class="section-title">스프레드를 선택하세요</h2>
+                <div class="spread-grid">
+                    <div th:each="spread, stat : ${spreadTypes}" class="spread-option">
+                        <input type="radio" th:id="${spread.name()}" name="spread"
+                               th:value="${spread.name()}"
+                               th:checked="${stat.first}">
+                        <label th:for="${spread.name()}">
+                            <span class="spread-count" th:text="${spread.cardCount} + '장'"></span>
+                            <span class="spread-name" th:text="${spread.displayName}"></span>
+                            <span class="spread-desc" th:text="${spread.description}"></span>
+                        </label>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 질문 입력 -->
+            <section class="section">
+                <h2 class="section-title">타로에게 물어보세요</h2>
+                <div class="question-wrap">
+                    <textarea name="question" class="question-input"
+                              placeholder="지금 가장 궁금한 것을 적어주세요&#10;예) 이 사람과의 관계는 어떻게 될까요?"
+                              minlength="10" maxlength="200" required
+                              oninvalid="this.setCustomValidity('정확한 해석을 위해 10자 이상 입력해주세요')"
+                              oninput="this.setCustomValidity('')"></textarea>
+                    <div class="question-hint">질문이 구체적일수록 해석이 정확해집니다</div>
+                </div>
+            </section>
+
+            <div class="submit-wrap">
+                <button type="submit" class="btn-draw">
+                    <span class="btn-icon">✦</span>
+                    카드 뽑기
+                    <span class="btn-icon">✦</span>
+                </button>
+            </div>
+        </form>
+    </main>
+
+    <footer class="main-footer">
+        <p>타로는 참고용이며, 최종 결정은 언제나 본인의 몫입니다</p>
+    </footer>
+</div>
+
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-box">
+        <div class="loading-symbol">🔮</div>
+        <p class="loading-text">달빛이 카드를 해석하는 중이에요...</p>
+        <div class="loading-dots"><span></span><span></span><span></span></div>
+    </div>
+</div>
+
+<script th:src="@{/js/tarot.js}"></script>
+<script>
+    document.querySelector('form').addEventListener('submit', function () {
+        document.getElementById('loadingOverlay').classList.add('active');
+    });
+</script>
+</body>
+</html>
